@@ -12,7 +12,7 @@ struct ClientRecord {
     DWORD startTick;
     DWORD endTick;
     BOOL served;
-    BOOL timeout;
+    BOOL timeout=false;
 };
 
 struct ClubState {
@@ -25,6 +25,8 @@ struct ClubState {
 ClubState clubst;
 int currentclients = 0;
 bool all;
+int allwait = 0;
+int allwaituntil=0;
 std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_int_distribution<> dis(2000, 5000);
@@ -41,6 +43,13 @@ DWORD WINAPI SuperLooker() {
     std::cout << "Количество Обслуженных мест: " << clubst.servedCount << std::endl;
     std::cout << "Количество поситителей, ушедших по таймауту: " << clubst.timeoutCount << std::endl;
     std::cout << "Максимальное количество посителей " << clubst.maxVisitors << std::endl;
+    std::cout << "Среднее время обслуживания: " << allwait/clubst.servedCount<< std::endl;
+    std::cout << "Среднее время ожидания: " << allwaituntil / clubst.servedCount << std::endl;
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clubst.clients[i].timeout) {
+            std::cout << "Недождался места: " << clubst.clients[i].threadId << std::endl;
+        }
+    }
     return 0;
 }
 
@@ -58,7 +67,9 @@ DWORD WINAPI GiperVisitor(LPVOID countes) {
             if (clubst.maxVisitors < clubst.currentVisitors)
                 clubst.maxVisitors = clubst.currentVisitors;
             clubst.clients[count].startTick = GetTickCount64();
+            allwaituntil += clubst.clients[count].startTick - clubst.clients[count].arriveTick;
             int a = dis(gen);
+            allwait += a;
             Sleep(a);
             clubst.currentVisitors= clubst.currentVisitors-1;
             clubst.clients[count].endTick = GetTickCount64();
