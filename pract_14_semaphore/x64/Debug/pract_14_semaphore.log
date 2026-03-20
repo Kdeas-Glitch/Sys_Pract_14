@@ -1,0 +1,11 @@
+﻿  pract_14_semaphore.cpp
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(49,17): warning C4311: приведение типов: усечение указателя из "LPVOID" в "int"
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(49,17): warning C4302: приведение типов: усечение из "LPVOID" к "int"
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(50,20): warning C4244: инициализация: преобразование "ULONGLONG" в "int", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(51,54): warning C4244: =: преобразование "ULONGLONG" в "DWORD", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(60,61): warning C4244: =: преобразование "ULONGLONG" в "DWORD", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(64,59): warning C4244: =: преобразование "ULONGLONG" в "DWORD", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(70,36): warning C4244: =: преобразование "ULONGLONG" в "int", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(73,59): warning C4244: =: преобразование "ULONGLONG" в "DWORD", возможна потеря данных
+C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\pract_14_semaphore\pract_14_semaphore.cpp(101,89): warning C4312: приведение типов: преобразование из "int" в "void *" большего размера
+  pract_14_semaphore.vcxproj -> C:\Users\HardShop\Desktop\Projects\Sys_Pract_14\x64\Debug\pract_14_semaphore.exe
