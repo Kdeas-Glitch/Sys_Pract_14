@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <windows.h>
-
+#include <random>
 
 #define MAX_CLIENTS 20
 #define CLUB_CAPACITY 4
@@ -24,18 +24,30 @@ struct ClubState {
 ClubState clubst;
 int currentclients = 0;
 bool all;
+int allwait = 0;
+int allwaituntil = 0;
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dis(2000, 5000);
 DWORD WINAPI SuperLooker() {
     while (!all) {
-    Sleep(500);
-        std::cout<<"Количество занятых мест: "<<clubst.currentVisitors << std::endl;
-        std::cout<<"Количество Обслуженных мест: " << clubst.servedCount << std::endl;
+        Sleep(500);
+        std::cout << "Количество занятых мест: " << clubst.currentVisitors << std::endl;
+        std::cout << "Количество Обслуженных мест: " << clubst.servedCount << std::endl;
         std::cout << "Количество поситителей, ушедших по таймауту: " << clubst.timeoutCount << std::endl;
     }
     Sleep(100);
     std::cout << "Количество занятых мест: " << clubst.currentVisitors << std::endl;
     std::cout << "Количество Обслуженных мест: " << clubst.servedCount << std::endl;
     std::cout << "Количество поситителей, ушедших по таймауту: " << clubst.timeoutCount << std::endl;
-    std::cout << "Максимальное количество посителей " << clubst.maxVisitors<< std::endl;
+    std::cout << "Максимальное количество посителей " << clubst.maxVisitors << std::endl;
+    std::cout << "Среднее время обслуживания: " << allwait / clubst.servedCount << std::endl;
+    std::cout << "Среднее время ожидания: " << allwaituntil / clubst.servedCount << std::endl;
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clubst.clients[i].timeout) {
+            std::cout << "Недождался места: " << clubst.clients[i].threadId << std::endl;
+        }
+    }
     return 0;
 }
 
@@ -50,9 +62,10 @@ DWORD WINAPI GiperVisitor(LPVOID countes) {
             if (clubst.maxVisitors < clubst.currentVisitors)
                 clubst.maxVisitors = clubst.currentVisitors;
             clubst.clients[count].startTick = GetTickCount64();
-            int a = (rand() % 3000)+2000;
+            int a = dis(gen);
+            allwait += a;
             Sleep(a);
-            clubst.currentVisitors--;
+            clubst.currentVisitors = clubst.currentVisitors - 1;
             clubst.clients[count].endTick = GetTickCount64();
             clubst.clients[count].served = true;
             clubst.servedCount++;
